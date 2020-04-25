@@ -1,7 +1,7 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
-#include "../Screen.h"
+#include "../graphics/Screen.h"
 
 namespace game {
 class Player {
