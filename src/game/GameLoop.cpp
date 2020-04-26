@@ -16,7 +16,7 @@ void GameLoop::loop() {
         // Poorly coded max framerate but must start somewhere
         usleep(1000000.0 / frameRate);
         updateInputState();
-        if (frame == frameRate / 10) {
+        if (frame == frameRate / m_pPlayer->speed) {
             m_pPlayer->update();
             frame = 0;
         } else {

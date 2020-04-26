@@ -17,8 +17,11 @@ class Player {
     graphics::Screen m_screen;
 
    public:
+    int speed;
+
+   public:
     Player(graphics::Screen screen);
-    void setSpeed(int vx, int vy);
+    void setDirection(int vx, int vy);
     void update();
 
    private:

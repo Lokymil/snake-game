@@ -1,7 +1,7 @@
 #include "Player.h"
 
 namespace game {
-Player::Player(graphics::Screen screen) : m_thickness(10), m_size(3), m_vx(0), m_vy(0), m_screen(screen) {
+Player::Player(graphics::Screen screen) : m_thickness(10), m_size(3), m_vx(0), m_vy(0), m_screen(screen), speed(10) {
     m_positions = {{screen.WINDOW_WIDTH / 2, screen.WINDOW_HEIGHT / 2}};
     drawFront();
 }
@@ -24,7 +24,7 @@ void Player::move() {
     clearRear();
 }
 
-void Player::setSpeed(int vx, int vy) {
+void Player::setDirection(int vx, int vy) {
     m_vx = vx;
     m_vy = vy;
 }

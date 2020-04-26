@@ -4,7 +4,7 @@
 namespace game {
 InputDevice::InputDevice(Player* pPlayer) : m_pPlayer(pPlayer) {
     m_moveVector = new int[2];
-    m_moveVector[0] = 0;
+    m_moveVector[0] = 1;
     m_moveVector[1] = 0;
 }
 
@@ -15,24 +15,28 @@ void InputDevice::updateState() {
 
     updateMoveVector(keyboardState);
 
-    m_pPlayer->setSpeed(m_moveVector[0], m_moveVector[1]);
+    m_pPlayer->setDirection(m_moveVector[0], m_moveVector[1]);
 }
 
 void InputDevice::updateMoveVector(const Uint8* keyboardState) {
-    if (keyboardState[SDL_SCANCODE_UP]) {
+    if (keyboardState[SDL_SCANCODE_UP] && m_moveVector[1] != 1) {
+        m_moveVector[0] = 0;
         m_moveVector[1] = -1;
-    } else if (keyboardState[SDL_SCANCODE_DOWN]) {
+    }
+
+    if (keyboardState[SDL_SCANCODE_DOWN] && m_moveVector[1] != -1) {
+        m_moveVector[0] = 0;
         m_moveVector[1] = 1;
-    } else {
+    }
+
+    if (keyboardState[SDL_SCANCODE_RIGHT] && m_moveVector[0] != -1) {
+        m_moveVector[0] = 1;
         m_moveVector[1] = 0;
     }
 
-    if (keyboardState[SDL_SCANCODE_RIGHT]) {
-        m_moveVector[0] = 1;
-    } else if (keyboardState[SDL_SCANCODE_LEFT]) {
+    if (keyboardState[SDL_SCANCODE_LEFT] && m_moveVector[0] != 1) {
         m_moveVector[0] = -1;
-    } else {
-        m_moveVector[0] = 0;
+        m_moveVector[1] = 0;
     }
 };
 }  // namespace game
