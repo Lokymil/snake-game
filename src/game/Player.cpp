@@ -1,14 +1,28 @@
 #include "Player.h"
 
 namespace game {
-Player::Player(graphics::Screen screen) : m_thickness(10), m_size(3), m_vx(0), m_vy(0), m_screen(screen), speed(10) {
-    m_positions = {{screen.WINDOW_WIDTH / 2, screen.WINDOW_HEIGHT / 2}};
+Player::Player(graphics::Screen* screen, int thickness)
+    : m_thickness(thickness), m_size(3), m_vx(0), m_vy(0), m_pScreen(screen), speed(10) {
+    m_positions = {{screen->WINDOW_WIDTH / 2, screen->WINDOW_HEIGHT / 2}};
     drawFront();
 }
+
+const std::vector<std::array<int, 2>> Player::getPositions() { return m_positions; }
 
 bool Player::update() {
     move();
     return isInValidPosition();
+}
+
+bool Player::hasEatenPoint(int xPoint, int yPoint) {
+    int x = m_positions.front()[0];
+    int y = m_positions.front()[1];
+    if (xPoint == x && yPoint == y) {
+        m_size++;
+        return true;
+    }
+
+    return false;
 }
 
 void Player::move() {
@@ -57,18 +71,18 @@ void Player::drawSprite(int posx, int posy, Uint8 red, Uint8 green, Uint8 blue) 
 
     for (int x = leftTopPixelThickness; x < rightBottomPixelThickness; x++) {
         for (int y = leftTopPixelThickness; y < rightBottomPixelThickness; y++) {
-            m_screen.setPixel(posx + x, posy + y, red, green, blue);
+            m_pScreen->setPixel(posx + x, posy + y, red, green, blue);
         }
     }
 
-    m_screen.update();
+    m_pScreen->update();
 }
 
 bool Player::isInValidPosition() {
     int x = m_positions.front()[0];
     int y = m_positions.front()[1];
 
-    if (x <= 0 || m_screen.WINDOW_WIDTH <= x || y <= 0 || m_screen.WINDOW_HEIGHT <= y) {
+    if (x <= 0 || m_pScreen->WINDOW_WIDTH <= x || y <= 0 || m_pScreen->WINDOW_HEIGHT <= y) {
         return false;
     }
 

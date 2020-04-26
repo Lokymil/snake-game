@@ -14,15 +14,17 @@ class Player {
     unsigned int m_size;
     int m_vx;
     int m_vy;
-    graphics::Screen m_screen;
+    graphics::Screen* m_pScreen;
 
    public:
     int speed;
 
    public:
-    Player(graphics::Screen screen);
+    Player(graphics::Screen* screen, int thickness);
     void setDirection(int vx, int vy);
+    const std::vector<std::array<int, 2>> getPositions();
     bool update();
+    bool hasEatenPoint(int xPoint, int yPoint);
 
    private:
     void move();

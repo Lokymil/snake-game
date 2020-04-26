@@ -9,8 +9,8 @@ int Screen::init() {
         return -1;
     }
 
-    m_window = SDL_CreateWindow("Block move", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH,
-                                WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+    m_window = SDL_CreateWindow("Snake", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT,
+                                SDL_WINDOW_SHOWN);
     if (m_window == NULL) {
         SDL_Quit();
         return -2;

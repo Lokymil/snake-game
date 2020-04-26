@@ -18,13 +18,9 @@ int main() {
         return initValue;
     }
 
-    game::Player* pPlayer = new game::Player(screen);
-
-    game::GameLoop game(pPlayer);
+    game::GameLoop game(&screen);
 
     game.loop();
-
-    delete pPlayer;
 
     screen.close();
 
