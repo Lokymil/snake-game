@@ -19,7 +19,8 @@ class Player {
 
    private:
     void move();
-    void draw(Uint8 red, Uint8 green, Uint8 blue);
+    void draw();
+    void clear(int posx, int posy);
 };
 }  // namespace game
 

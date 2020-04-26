@@ -14,10 +14,10 @@ class InputDevice {
    public:
     InputDevice(Player* pPlayer);
     ~InputDevice();
-    void catchInput(SDL_Event event);
+    void updateState();
 
    private:
-    void updateMoveVector(int key, bool isKeyDown);
+    void updateMoveVector(const Uint8* keyboardState);
 };
 }  // namespace game
 

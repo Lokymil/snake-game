@@ -3,7 +3,7 @@
 namespace game {
 Player::Player(graphics::Screen screen)
     : m_x(screen.WINDOW_WIDTH / 2), m_y(screen.WINDOW_HEIGHT / 2), m_vx(0), m_vy(0), m_screen(screen) {
-    draw(0xFF, 0xFF, 0xFF);
+    draw();
 }
 
 void Player::update() { move(); }
@@ -12,7 +12,8 @@ void Player::move() {
     if (m_vx == 0 && m_vy == 0) {
         return;
     }
-    draw(0, 0, 0);
+    int xBeforeMove = m_x;
+    int yBeforeMove = m_y;
 
     int nextX = m_x + m_vx * 10;
     int nextY = m_y + m_vy * 10;
@@ -25,7 +26,10 @@ void Player::move() {
         m_y = nextY;
     }
 
-    draw(0xFF, 0xFF, 0xFF);
+    if (m_x != xBeforeMove || m_y != yBeforeMove) {
+        draw();
+        clear(xBeforeMove, yBeforeMove);
+    }
 }
 
 void Player::setSpeed(int vx, int vy) {
@@ -33,10 +37,20 @@ void Player::setSpeed(int vx, int vy) {
     m_vy = vy;
 }
 
-void Player::draw(Uint8 red, Uint8 green, Uint8 blue) {
+void Player::draw() {
     for (int x = -5; x <= 5; x++) {
         for (int y = -5; y <= 5; y++) {
-            m_screen.setPixel(m_x + x, m_y + y, red, green, blue);
+            m_screen.setPixel(m_x + x, m_y + y, 0xFF, 0xFF, 0xFF);
+        }
+    }
+
+    m_screen.update();
+}
+
+void Player::clear(int posx, int posy) {
+    for (int x = -5; x <= 5; x++) {
+        for (int y = -5; y <= 5; y++) {
+            m_screen.setPixel(posx + x, posy + y, 0, 0, 0);
         }
     }
 

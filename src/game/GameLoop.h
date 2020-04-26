@@ -20,7 +20,8 @@ class GameLoop {
     void loop();
 
    private:
-    bool eventLoop();
+    bool hasQuit();
+    void updateInputState();
 };
 }  // namespace game
 
