@@ -10,7 +10,7 @@ SRCDIR = src
 SOURCES = $(shell find . -type f -wholename "**/*.cpp" | grep -v main.cpp | sed -e 's/\.\/$(SRCDIR)\///')
 OBJS = $(addprefix $(BUILDDIR)/, $(addsuffix .o, $(basename $(SOURCES))))
 
-.PHONY: start build buildir clear
+.PHONY: start build buildir clear valgrind
 ##----------------------------------------------------
 
 start: build
@@ -37,3 +37,15 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp $(SRCDIR)/%.h
 clear:
 	rm -rf $(dir $(EXE))
 	rm -rf build
+	rm -rf log
+
+valgrind: build
+	mkdir -p log
+	rm -f log/valgrind-out.txt
+	valgrind --leak-check=full \
+         --show-leak-kinds=all \
+		 --leak-resolution=low \
+         --track-origins=yes \
+         --verbose \
+         --log-file=log/valgrind-out.txt \
+         $(EXE)
