@@ -4,7 +4,7 @@
 
 namespace game {
 GameLoop::GameLoop(graphics::Screen* pScreen) : frameRate(60.0) {
-    int thickness = 10;
+    int thickness = 20;
     m_pPlayer = new Player(pScreen, thickness);
     m_pInputDevice = new InputDevice(m_pPlayer);
     m_pPoint = new Point(pScreen, thickness);
