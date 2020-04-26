@@ -10,12 +10,18 @@ GameLoop::GameLoop(Player* pPlayer) : frameRate(60.0), m_pPlayer(pPlayer) { m_pI
 GameLoop::~GameLoop() { delete m_pInputDevice; }
 
 void GameLoop::loop() {
+    int frame = 0;
     while (hasQuit()) {
         // Cannot iterate more than 60 times per second
         // Poorly coded max framerate but must start somewhere
         usleep(1000000.0 / frameRate);
         updateInputState();
-        m_pPlayer->update();
+        if (frame == frameRate / 10) {
+            m_pPlayer->update();
+            frame = 0;
+        } else {
+            frame++;
+        }
     }
 }
 

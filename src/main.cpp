@@ -2,9 +2,9 @@
 
 #include <iostream>
 
-#include "Screen.h"
 #include "game/GameLoop.h"
 #include "game/Player.h"
+#include "graphics/Screen.h"
 
 int main() {
     graphics::Screen screen;
