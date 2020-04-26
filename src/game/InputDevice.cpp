@@ -1,6 +1,5 @@
 #include "InputDevice.h"
 
-#include <iostream>
 namespace game {
 InputDevice::InputDevice(Player* pPlayer) : m_pPlayer(pPlayer) {
     m_moveVector = new int[2];

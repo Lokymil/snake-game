@@ -6,7 +6,10 @@ Player::Player(graphics::Screen screen) : m_thickness(10), m_size(3), m_vx(0), m
     drawFront();
 }
 
-void Player::update() { move(); }
+bool Player::update() {
+    move();
+    return isInValidPosition();
+}
 
 void Player::move() {
     if (m_vx == 0 && m_vy == 0) {
@@ -59,6 +62,23 @@ void Player::drawSprite(int posx, int posy, Uint8 red, Uint8 green, Uint8 blue) 
     }
 
     m_screen.update();
+}
+
+bool Player::isInValidPosition() {
+    int x = m_positions.front()[0];
+    int y = m_positions.front()[1];
+
+    if (x <= 0 || m_screen.WINDOW_WIDTH <= x || y <= 0 || m_screen.WINDOW_HEIGHT <= y) {
+        return false;
+    }
+
+    for (unsigned int trailIndex = 1; trailIndex < m_positions.size(); trailIndex++) {
+        if (m_positions[trailIndex][0] == x && m_positions[trailIndex][1] == y) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 }  // namespace game

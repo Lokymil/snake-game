@@ -22,13 +22,14 @@ class Player {
    public:
     Player(graphics::Screen screen);
     void setDirection(int vx, int vy);
-    void update();
+    bool update();
 
    private:
     void move();
     void drawFront();
     void clearRear();
     void drawSprite(int x, int y, Uint8 red, Uint8 green, Uint8 blue);
+    bool isInValidPosition();
 };
 }  // namespace game
 

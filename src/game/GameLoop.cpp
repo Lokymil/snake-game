@@ -11,13 +11,14 @@ GameLoop::~GameLoop() { delete m_pInputDevice; }
 
 void GameLoop::loop() {
     int frame = 0;
-    while (hasQuit()) {
+    bool lost = false;
+    while (hasQuit() && !lost) {
         // Cannot iterate more than 60 times per second
         // Poorly coded max framerate but must start somewhere
         usleep(1000000.0 / frameRate);
         updateInputState();
         if (frame == frameRate / m_pPlayer->speed) {
-            m_pPlayer->update();
+            lost = !m_pPlayer->update();
             frame = 0;
         } else {
             frame++;
