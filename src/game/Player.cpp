@@ -1,9 +1,9 @@
 #include "Player.h"
 
 namespace game {
-Player::Player(graphics::Screen screen)
-    : m_x(screen.WINDOW_WIDTH / 2), m_y(screen.WINDOW_HEIGHT / 2), m_vx(0), m_vy(0), m_screen(screen) {
-    draw();
+Player::Player(graphics::Screen screen) : m_thickness(10), m_size(3), m_vx(0), m_vy(0), m_screen(screen) {
+    m_positions = {{screen.WINDOW_WIDTH / 2, screen.WINDOW_HEIGHT / 2}};
+    drawFront();
 }
 
 void Player::update() { move(); }
@@ -12,24 +12,16 @@ void Player::move() {
     if (m_vx == 0 && m_vy == 0) {
         return;
     }
-    int xBeforeMove = m_x;
-    int yBeforeMove = m_y;
+    int x = m_positions.front()[0];
+    int y = m_positions.front()[1];
 
-    int nextX = m_x + m_vx * 10;
-    int nextY = m_y + m_vy * 10;
+    int nextX = x + m_vx * m_thickness;
+    int nextY = y + m_vy * m_thickness;
 
-    if (0 < nextX && nextX < m_screen.WINDOW_WIDTH) {
-        m_x = nextX;
-    }
+    m_positions.insert(m_positions.begin(), {nextX, nextY});
 
-    if (0 < nextY && nextY < m_screen.WINDOW_HEIGHT) {
-        m_y = nextY;
-    }
-
-    if (m_x != xBeforeMove || m_y != yBeforeMove) {
-        draw();
-        clear(xBeforeMove, yBeforeMove);
-    }
+    drawFront();
+    clearRear();
 }
 
 void Player::setSpeed(int vx, int vy) {
@@ -37,20 +29,32 @@ void Player::setSpeed(int vx, int vy) {
     m_vy = vy;
 }
 
-void Player::draw() {
-    for (int x = -5; x <= 5; x++) {
-        for (int y = -5; y <= 5; y++) {
-            m_screen.setPixel(m_x + x, m_y + y, 0xFF, 0xFF, 0xFF);
-        }
-    }
+void Player::drawFront() {
+    int posx = m_positions.front()[0];
+    int posy = m_positions.front()[1];
 
-    m_screen.update();
+    drawSprite(posx, posy, 0xFF, 0xFF, 0xFF);
 }
 
-void Player::clear(int posx, int posy) {
-    for (int x = -5; x <= 5; x++) {
-        for (int y = -5; y <= 5; y++) {
-            m_screen.setPixel(posx + x, posy + y, 0, 0, 0);
+void Player::clearRear() {
+    if (m_positions.size() <= m_size) {
+        return;
+    }
+
+    int posx = m_positions.back()[0];
+    int posy = m_positions.back()[1];
+    drawSprite(posx, posy, 0, 0, 0);
+
+    m_positions.pop_back();
+}
+
+void Player::drawSprite(int posx, int posy, Uint8 red, Uint8 green, Uint8 blue) {
+    int leftTopPixelThickness = -m_thickness + m_thickness / 2;
+    int rightBottomPixelThickness = m_thickness - m_thickness / 2;
+
+    for (int x = leftTopPixelThickness; x < rightBottomPixelThickness; x++) {
+        for (int y = leftTopPixelThickness; y < rightBottomPixelThickness; y++) {
+            m_screen.setPixel(posx + x, posy + y, red, green, blue);
         }
     }
 

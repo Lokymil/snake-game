@@ -1,13 +1,17 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
+#include <array>
+#include <vector>
+
 #include "../graphics/Screen.h"
 
 namespace game {
 class Player {
    private:
-    int m_x;
-    int m_y;
+    int m_thickness;
+    std::vector<std::array<int, 2>> m_positions;
+    unsigned int m_size;
     int m_vx;
     int m_vy;
     graphics::Screen m_screen;
@@ -19,8 +23,9 @@ class Player {
 
    private:
     void move();
-    void draw();
-    void clear(int posx, int posy);
+    void drawFront();
+    void clearRear();
+    void drawSprite(int x, int y, Uint8 red, Uint8 green, Uint8 blue);
 };
 }  // namespace game
 
