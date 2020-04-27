@@ -21,7 +21,7 @@ class LoseScreen {
 
    private:
     void display(int score);
-    void hasClickRestart();
+    bool hasClickRestart();
     void hide();
 };
 }  // namespace graphics

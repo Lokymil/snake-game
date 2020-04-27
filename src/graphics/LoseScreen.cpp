@@ -1,5 +1,7 @@
 #include "LoseScreen.h"
 
+#include <string>
+
 namespace graphics {
 LoseScreen::LoseScreen(Screen* pScreen) : m_pScreen(pScreen), m_isDisplay(false) {
     TTF_Init();
@@ -22,7 +24,11 @@ bool LoseScreen::shouldRestart(int score) {
 void LoseScreen::display(int score) {
     m_isDisplay = true;
     SDL_Color White = {255, 255, 255};
-    m_pSurface = TTF_RenderText_Solid(m_font, "Game over", White);
+
+    std::string loseSentence = "Score: " + std::to_string(score);
+    const char* cstr = loseSentence.c_str();
+
+    m_pSurface = TTF_RenderText_Solid(m_font, cstr, White);
 
     m_pScreen->displayMessageScreen(m_pSurface);
 }
