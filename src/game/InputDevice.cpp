@@ -3,7 +3,7 @@
 namespace game {
 InputDevice::InputDevice(Player* pPlayer) : m_pPlayer(pPlayer) {
     m_moveVector = new int[2];
-    m_moveVector[0] = 1;
+    m_moveVector[0] = 0;
     m_moveVector[1] = 0;
 }
 

@@ -1,9 +1,15 @@
 #include "Player.h"
 
 namespace game {
-Player::Player(graphics::Screen* screen, int thickness)
-    : m_thickness(thickness), m_size(3), m_vx(0), m_vy(0), m_pScreen(screen), speed(10) {
-    m_positions = {{screen->WINDOW_WIDTH / 2, screen->WINDOW_HEIGHT / 2}};
+Player::Player(graphics::Screen* screen, int thickness) : m_thickness(thickness), m_pScreen(screen), speed(10) {
+    init();
+}
+
+void Player::init() {
+    m_vx = 0;
+    m_vy = 0;
+    m_size = INITIAL_LENGTH;
+    m_positions = {{m_pScreen->WINDOW_WIDTH / 2, m_pScreen->WINDOW_HEIGHT / 2}};
     drawFront();
 }
 
@@ -23,6 +29,16 @@ bool Player::hasEatenPoint(int xPoint, int yPoint) {
     }
 
     return false;
+}
+
+int Player::getScore() { return m_size - INITIAL_LENGTH; }
+
+void Player::reset() {
+    for (std::array<int, 2> pos : m_positions) {
+        drawSprite(pos[0], pos[1], 0, 0, 0);
+    }
+
+    init();
 }
 
 void Player::move() {

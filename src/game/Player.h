@@ -9,9 +9,10 @@
 namespace game {
 class Player {
    private:
+    const int INITIAL_LENGTH = 3;
     int m_thickness;
     std::vector<std::array<int, 2>> m_positions;
-    unsigned int m_size;
+    unsigned int m_size = INITIAL_LENGTH;
     int m_vx;
     int m_vy;
     graphics::Screen* m_pScreen;
@@ -25,8 +26,11 @@ class Player {
     const std::vector<std::array<int, 2>> getPositions();
     bool update();
     bool hasEatenPoint(int xPoint, int yPoint);
+    int getScore();
+    void reset();
 
    private:
+    void init();
     void move();
     void drawFront();
     void clearRear();

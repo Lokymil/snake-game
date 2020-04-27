@@ -17,24 +17,19 @@ GameLoop::~GameLoop() {
 }
 
 void GameLoop::loop() {
-    int frame = 0;
+    int framePlayed = 0;
     bool lost = false;
 
     m_pPoint->generate(m_pPlayer->getPositions());
 
-    while (!hasQuit() && !lost) {
+    while (!hasQuit()) {
         // Cannot iterate more than 60 times per second
         // Poorly coded max framerate but must start somewhere
         usleep(1000000.0 / frameRate);
-        updateInputState();
-        if (frame == frameRate / m_pPlayer->speed) {
-            lost = !m_pPlayer->update();
-            if (m_pPlayer->hasEatenPoint(m_pPoint->m_x, m_pPoint->m_y)) {
-                m_pPoint->generate(m_pPlayer->getPositions());
-            }
-            frame = 0;
+        if (!lost) {
+            lost = runGame(framePlayed);
         } else {
-            frame++;
+            lost = loseScreen();
         }
     }
 }
@@ -50,4 +45,25 @@ bool GameLoop::hasQuit() {
 }
 
 void GameLoop::updateInputState() { m_pInputDevice->updateState(); }
+
+bool GameLoop::runGame(int& framePlayed) {
+    bool lost;
+    updateInputState();
+    if (framePlayed == frameRate / m_pPlayer->speed) {
+        lost = !m_pPlayer->update();
+        if (m_pPlayer->hasEatenPoint(m_pPoint->m_x, m_pPoint->m_y)) {
+            m_pPoint->generate(m_pPlayer->getPositions());
+        }
+        framePlayed = 0;
+    } else {
+        framePlayed += 1;
+    }
+
+    return lost;
+}
+
+bool GameLoop::loseScreen() {
+    m_pPlayer->reset();
+    return false;
+}
 }  // namespace game

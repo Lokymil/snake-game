@@ -25,6 +25,8 @@ class GameLoop {
    private:
     bool hasQuit();
     void updateInputState();
+    bool runGame(int& frame);
+    bool loseScreen();
 };
 }  // namespace game
 
