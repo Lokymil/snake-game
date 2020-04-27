@@ -2,7 +2,7 @@ CXX = g++
 
 CXXFLAGS = -g -Wall -Wformat
 CXXFLAGS += -std=c++17
-LIBS = -lSDL2
+LIBS = -lSDL2 -lSDL2_ttf
 EXE = out/snake
 BUILDDIR = build
 SRCDIR = src

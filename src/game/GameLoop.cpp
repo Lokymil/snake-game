@@ -5,12 +5,14 @@
 namespace game {
 GameLoop::GameLoop(graphics::Screen* pScreen) : frameRate(60.0) {
     int thickness = 20;
+    m_pLoseScreen = new graphics::LoseScreen(pScreen);
     m_pPlayer = new Player(pScreen, thickness);
     m_pInputDevice = new InputDevice(m_pPlayer);
     m_pPoint = new Point(pScreen, thickness);
 }
 
 GameLoop::~GameLoop() {
+    delete m_pLoseScreen;
     delete m_pPoint;
     delete m_pInputDevice;
     delete m_pPlayer;
@@ -62,8 +64,5 @@ bool GameLoop::runGame(int& framePlayed) {
     return lost;
 }
 
-bool GameLoop::loseScreen() {
-    m_pPlayer->reset();
-    return false;
-}
+bool GameLoop::loseScreen() { return !m_pLoseScreen->shouldRestart(m_pPlayer->getScore()); }
 }  // namespace game

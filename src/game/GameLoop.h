@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 
+#include "../graphics/LoseScreen.h"
 #include "../graphics/Screen.h"
 #include "InputDevice.h"
 #include "Player.h"
@@ -12,6 +13,7 @@ namespace game {
 class GameLoop {
    private:
     double frameRate;
+    graphics::LoseScreen* m_pLoseScreen;
     InputDevice* m_pInputDevice;
     Player* m_pPlayer;
     Point* m_pPoint;

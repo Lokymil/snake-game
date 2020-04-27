@@ -1,7 +1,5 @@
 #include "Screen.h"
 
-#include <iostream>
-
 namespace graphics {
 int Screen::init() {
     const int initCode = SDL_Init(SDL_INIT_VIDEO);
@@ -38,6 +36,16 @@ int Screen::init() {
     return 0;
 }
 
+void Screen::displayMessageScreen(SDL_Surface* messageSurface) {
+    m_message_texture = SDL_CreateTextureFromSurface(m_renderer, messageSurface);
+
+    SDL_RenderClear(m_renderer);
+    SDL_RenderCopy(m_renderer, m_message_texture, NULL, NULL);
+    SDL_RenderPresent(m_renderer);
+}
+
+void Screen::displayGame() { SDL_UpdateTexture(m_texture, NULL, m_buffer, WINDOW_WIDTH * sizeof(Uint32)); }
+
 void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
     if (x < 0 || x >= WINDOW_WIDTH || y < 0 || y >= WINDOW_HEIGHT) {
         return;
@@ -64,6 +72,7 @@ void Screen::update() {
 
 void Screen::close() {
     delete[] m_buffer;
+    SDL_DestroyTexture(m_message_texture);
     SDL_DestroyTexture(m_texture);
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);
