@@ -22,7 +22,7 @@ void GameLoop::loop() {
 
     m_pPoint->generate(m_pPlayer->getPositions());
 
-    while (hasQuit() && !lost) {
+    while (!hasQuit() && !lost) {
         // Cannot iterate more than 60 times per second
         // Poorly coded max framerate but must start somewhere
         usleep(1000000.0 / frameRate);
@@ -42,11 +42,11 @@ void GameLoop::loop() {
 bool GameLoop::hasQuit() {
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
-            return false;
+            return true;
         }
     }
 
-    return true;
+    return false;
 }
 
 void GameLoop::updateInputState() { m_pInputDevice->updateState(); }
