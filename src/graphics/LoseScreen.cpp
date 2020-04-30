@@ -27,7 +27,7 @@ void LoseScreen::display(int score) {
     m_isDisplay = true;
     // SDL_Color White = {255, 255, 255};
 
-    std::string loseSentence = "Score: " + std::to_string(score);
+    std::string loseSentence = "Game over\nScore: " + std::to_string(score);
     const char* cstr = loseSentence.c_str();
 
     // m_pSurface = TTF_RenderText_Solid(m_font, cstr, White);
