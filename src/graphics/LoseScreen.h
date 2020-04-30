@@ -11,7 +11,7 @@ class LoseScreen {
    private:
     Screen* m_pScreen;
     SDL_Surface* m_pSurface;
-    TTF_Font* m_font;
+    TTF_Font* m_pFont;
     bool m_isDisplay;
 
    public:

@@ -10,12 +10,16 @@ SRCDIR = src
 SOURCES = $(shell find . -type f -wholename "**/*.cpp" | grep -v main.cpp | sed -e 's/\.\/$(SRCDIR)\///')
 OBJS = $(addprefix $(BUILDDIR)/, $(addsuffix .o, $(basename $(SOURCES))))
 
-.PHONY: start build buildir clear valgrind
+.PHONY: start debug build buildir clear valgrind
 ##----------------------------------------------------
 
 start: build
 	@echo "Start $(EXE)"
 	./$(EXE)
+
+debug: build
+	@echo "Start $(EXE) in debug mode"
+	gdb ./$(EXE)
 
 build: buildir $(EXE)
 	@echo "Build completed"
