@@ -32,6 +32,7 @@ SDL_Surface* generateTextSurface(TTF_Font* font, int xOrigin, int yOrigin, int w
             destinationRect.y = 0;         // setup y on  glyph's top coordinate
             SDL_BlitSurface(glyphSurface, NULL, lineSurface, &destinationRect);
             currentX += advance;
+            SDL_FreeSurface(glyphSurface);
         }
 
         currentY += lineHeight;
@@ -42,10 +43,9 @@ SDL_Surface* generateTextSurface(TTF_Font* font, int xOrigin, int yOrigin, int w
         SDL_BlitSurface(lineSurface, NULL, destination, &destinationRect);
 
         currentX = 0;
-    }
 
-    delete lineSurface;
-    delete glyphSurface;
+        SDL_FreeSurface(lineSurface);
+    }
 
     return destination;
 }

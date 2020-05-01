@@ -1,5 +1,6 @@
 #include "LoseScreen.h"
 
+#include <iostream>
 #include <string>
 
 #include "screen.utils.h"
