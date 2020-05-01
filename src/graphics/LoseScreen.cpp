@@ -25,14 +25,11 @@ bool LoseScreen::shouldRestart(int score) {
 
 void LoseScreen::display(int score) {
     m_isDisplay = true;
-    // SDL_Color White = {255, 255, 255};
 
     std::string loseSentence = "Game over\nScore: " + std::to_string(score);
-    const char* cstr = loseSentence.c_str();
 
     // m_pSurface = TTF_RenderText_Solid(m_font, cstr, White);
-    m_pSurface = generateTextSurface(m_pFont, 0, 0, m_pScreen->WINDOW_WIDTH, m_pScreen->WINDOW_HEIGHT, cstr,
-                                     loseSentence.size());
+    m_pSurface = generateTextSurface(m_pFont, 0, 0, m_pScreen->WINDOW_WIDTH, m_pScreen->WINDOW_HEIGHT, loseSentence);
 
     m_pScreen->displayMessageScreen(m_pSurface);
 }
